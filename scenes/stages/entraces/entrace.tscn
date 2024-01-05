@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpiflumv0t6g5"]
+
+[ext_resource type="Script" path="res://scenes/stages/entraces/entrace.gd" id="1_gm6gc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_op8sj"]
+
+[node name="Entrace" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_gm6gc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_op8sj")
+
+[node name="Pos1" type="Marker2D" parent="."]
+
+[node name="Pos2" type="Marker2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

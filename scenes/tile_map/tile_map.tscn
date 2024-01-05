@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://vgssb81nvdgt"]
+
+[ext_resource type="Script" path="res://scenes/tile_map/tile_map.gd" id="1_x2pvg"]
+
+[sub_resource type="TileSet" id="TileSet_supmt"]
+
+[node name="TileMap" type="TileMap"]
+modulate = Color(1, 1, 1, 0.529412)
+z_index = -1
+tile_set = SubResource("TileSet_supmt")
+format = 2
+script = ExtResource("1_x2pvg")

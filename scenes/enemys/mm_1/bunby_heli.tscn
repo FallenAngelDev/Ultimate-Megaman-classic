@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://bhx0v4p56q12h"]
+
+[ext_resource type="Texture2D" uid="uid://fsqubjt8plpg" path="res://assets/sprites/enemys/enemys_atlas/bumby_heli.tres" id="1_exle4"]
+[ext_resource type="Script" path="res://scenes/enemys/mm_1/bunby_heli.gd" id="1_smfmk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twtc5"]
+atlas = ExtResource("1_exle4")
+region = Rect2(0, 0, 19, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r86n5"]
+atlas = ExtResource("1_exle4")
+region = Rect2(19, 0, 19, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kwq2t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twtc5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r86n5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_phqkx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pu5xx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ssygm"]
+radius = 102.005
+
+[node name="Bunby_heli" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_smfmk")
+hp = 10
+damage = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kwq2t")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_phqkx")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_pu5xx")
+
+[node name="mm_detector" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mm_detector"]
+shape = SubResource("CircleShape2D_ssygm")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="mm_detector" to="." method="_on_mm_detector_body_entered"]

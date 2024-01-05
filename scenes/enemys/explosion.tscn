@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://bdb7vbnfwbbos"]
+
+[ext_resource type="Texture2D" uid="uid://fwycpa2so0tg" path="res://assets/sprites/enemys/enemy_esplosion.png" id="1_ccoxx"]
+[ext_resource type="Script" path="res://scenes/enemys/explosion.gd" id="2_6sfbk"]
+[ext_resource type="AudioStream" uid="uid://b0jaim2nfk4dj" path="res://assets/audios/effetcs/enemyDamage.wav" id="2_mefpo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j26eh"]
+atlas = ExtResource("1_ccoxx")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pp45"]
+atlas = ExtResource("1_ccoxx")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cl7sj"]
+atlas = ExtResource("1_ccoxx")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jd4eh"]
+atlas = ExtResource("1_ccoxx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_akdwr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j26eh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pp45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cl7sj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jd4eh")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="Explosion" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_akdwr")
+autoplay = "default"
+frame = 6
+frame_progress = 1.0
+script = ExtResource("2_6sfbk")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_mefpo")
+autoplay = true
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

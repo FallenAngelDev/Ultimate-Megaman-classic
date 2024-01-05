@@ -1,0 +1,108 @@
+[gd_scene load_steps=13 format=3 uid="uid://db11kbc38f0bb"]
+
+[ext_resource type="Script" path="res://scenes/enemys/mm_1/met.gd" id="1_4f241"]
+[ext_resource type="Shader" path="res://resources/shaders/hit_flash.gdshader" id="1_bys7j"]
+[ext_resource type="Texture2D" uid="uid://cytlnfjbrwpk6" path="res://assets/sprites/enemys/enemys_atlas/met.tres" id="1_uhqym"]
+[ext_resource type="AudioStream" uid="uid://em4o2sag3vj7" path="res://assets/audios/effetcs/dink.wav" id="3_1c02s"]
+[ext_resource type="AudioStream" uid="uid://cdmxdbh608ge8" path="res://assets/audios/effetcs/enemyShoot.wav" id="5_rv6sp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ytkp7"]
+shader = ExtResource("1_bys7j")
+shader_parameter/active = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k646u"]
+size = Vector2(20, 11.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04vwp"]
+size = Vector2(20, 17.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_074er"]
+radius = 107.019
+
+[sub_resource type="Animation" id="Animation_46yq2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_rxd7b"]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_webrn"]
+_data = {
+"RESET": SubResource("Animation_46yq2"),
+"hit": SubResource("Animation_rxd7b")
+}
+
+[node name="Met" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_4f241")
+hp = 50
+damage = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ytkp7")
+position = Vector2(0.5, -1.5)
+texture = ExtResource("1_uhqym")
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 2.75)
+shape = SubResource("RectangleShape2D_k646u")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0.5, -1.5)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1.25)
+shape = SubResource("RectangleShape2D_04vwp")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(0.5, -1.5)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("CircleShape2D_074er")
+
+[node name="DinkAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_1c02s")
+
+[node name="ShootAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_rv6sp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_webrn")
+}
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
+[connection signal="body_exited" from="Area2D2" to="." method="_on_area_2d_2_body_exited"]
