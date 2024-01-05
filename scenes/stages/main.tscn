@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bjr0mx3jvg0ki"]
+[gd_scene load_steps=11 format=3 uid="uid://bjr0mx3jvg0ki"]
 
 [ext_resource type="Texture2D" uid="uid://op5k0nxpypue" path="res://assets/sprites/tilesets/guts_man_tileset.png" id="1_gpiab"]
 [ext_resource type="Script" path="res://scenes/stages/stage.gd" id="1_l4j0j"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://db11kbc38f0bb" path="res://scenes/enemys/mm_1/met.tscn" id="4_eofak"]
 [ext_resource type="PackedScene" uid="uid://bhx0v4p56q12h" path="res://scenes/enemys/mm_1/bunby_heli.tscn" id="5_7wxa4"]
 [ext_resource type="PackedScene" uid="uid://dksntjdam3ovd" path="res://scenes/enemys/mm_1/picket_man.tscn" id="7_5y58r"]
+[ext_resource type="PackedScene" uid="uid://bdcbp3jpcshgp" path="res://scenes/itens/life_energy.tscn" id="8_gboqg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_puflj"]
 texture = ExtResource("1_gpiab")
@@ -194,6 +195,9 @@ position = Vector2(1121, 73)
 
 [node name="PicketMan" parent="." instance=ExtResource("7_5y58r")]
 position = Vector2(480, 128)
+
+[node name="LifeEnergy" parent="." instance=ExtResource("8_gboqg")]
+position = Vector2(288, 144)
 
 [editable path="Megaman"]
 [editable path="Megaman/Buster"]

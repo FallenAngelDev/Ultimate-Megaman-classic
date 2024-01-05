@@ -43,6 +43,7 @@ ui_shoot={
 2d_physics/layer_3="bullets"
 2d_physics/layer_4="entraces"
 2d_physics/layer_5="enemys"
+2d_physics/layer_6="itens"
 
 [rendering]
 

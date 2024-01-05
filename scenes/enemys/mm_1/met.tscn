@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://db11kbc38f0bb"]
+[gd_scene load_steps=9 format=3 uid="uid://db11kbc38f0bb"]
 
 [ext_resource type="Script" path="res://scenes/enemys/mm_1/met.gd" id="1_4f241"]
 [ext_resource type="Shader" path="res://resources/shaders/hit_flash.gdshader" id="1_bys7j"]
@@ -17,42 +17,6 @@ size = Vector2(20, 17.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_074er"]
 radius = 107.019
-
-[sub_resource type="Animation" id="Animation_46yq2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:material:shader_parameter/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_rxd7b"]
-resource_name = "hit"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:material:shader_parameter/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_webrn"]
-_data = {
-"RESET": SubResource("Animation_46yq2"),
-"hit": SubResource("Animation_rxd7b")
-}
 
 [node name="Met" type="CharacterBody2D"]
 collision_layer = 16
@@ -92,11 +56,6 @@ shape = SubResource("CircleShape2D_074er")
 
 [node name="ShootAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_rv6sp")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_webrn")
-}
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

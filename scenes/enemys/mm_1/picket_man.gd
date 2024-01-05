@@ -22,7 +22,7 @@ func _on_hurt_box_body_entered(body: Bullet) -> void:
 	if body.friend:
 		receive_damage(body.damage)
 		sprite.material.set("shader_param/active",true)
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.1).timeout
 		sprite.material.set("shader_param/active",false)
 		body.queue_free()
 

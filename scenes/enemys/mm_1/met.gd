@@ -25,7 +25,9 @@ func _on_area_2d_body_entered(body: Bullet) -> void:
 		$Timer.start()
 		return
 	if body.friend == true:
-		$AnimationPlayer.play("hit")
+		sprite.material.set("shader_param/active",true)
+		await get_tree().create_timer(0.1).timeout
+		sprite.material.set("shader_param/active",false)
 		receive_damage(body.damage)
 
 func _on_area_2d_2_body_entered(body: Megaman) -> void:

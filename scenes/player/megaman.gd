@@ -135,3 +135,22 @@ func _on_hurt_box_body_entered(body: CharacterBody2D) -> void:
 		var bullet = body as Bullet
 		if bullet.friend == false:
 			_damage(body.damage, false)
+	if body as Item:
+		var item = body as Item
+		_charge_bar(item.amount)
+		item.queue_free()
+
+func _death():
+	pass
+
+func _charge_bar(amount):
+	if hp_bar.value == hp_bar.max_value:
+		return
+	current_state = FROZEN
+	velocity = Vector2.ZERO
+	$ChargeBar.play()
+	for i in amount:
+		await get_tree().create_timer(0.1).timeout
+		hp_bar.value += 1
+	current_state = IDLE
+	$ChargeBar.stop()
