@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://df4mkyr2yvov6"]
 
-[ext_resource type="Script" path="res://scenes/weapons/bullets/bullet.gd" id="1_l5o71"]
-[ext_resource type="Texture2D" uid="uid://1uas7vwgpuyq" path="res://assets/sprites/enemys/mm1enemysheet.png" id="1_tw4h2"]
+[ext_resource type="Script" path="res://scenes/weapons/bullets/bullet.gd" id="1_vlm55"]
+[ext_resource type="Texture2D" uid="uid://1uas7vwgpuyq" path="res://assets/sprites/enemys/mm1enemysheet.png" id="2_kgmiy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w6hb4"]
 size = Vector2(6, 6)
@@ -9,12 +9,12 @@ size = Vector2(6, 6)
 [node name="SimpleBullet" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 0
-script = ExtResource("1_l5o71")
+script = ExtResource("1_vlm55")
 damage = 3
-speed = 100
+speed = 50
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_tw4h2")
+texture = ExtResource("2_kgmiy")
 region_enabled = true
 region_rect = Rect2(51, 41, 6, 6)
 

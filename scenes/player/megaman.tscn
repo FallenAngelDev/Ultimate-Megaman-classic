@@ -468,6 +468,9 @@ libraries = {
 }
 
 [node name="Camera2D" parent="." instance=ExtResource("8_st037")]
+position_smoothing_speed = 10.0
+drag_left_margin = 0.15
+drag_right_margin = 0.15
 
 [node name="Buster" parent="." instance=ExtResource("8_jn8ux")]
 

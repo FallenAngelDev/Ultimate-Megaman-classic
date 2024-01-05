@@ -16,4 +16,3 @@ func _ready() -> void:
 
 func _on_body_entered(body: Megaman) -> void:
 	body._update_screen_limt(pos1,pos2)
-	pass # Replace with function body.

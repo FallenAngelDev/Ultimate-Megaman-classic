@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://lf7ytsyiuem8"]
+
+[ext_resource type="Script" path="res://scenes/enemys/bullets/pick_axe.gd" id="1_hhc3m"]
+[ext_resource type="Texture2D" uid="uid://bfe54bsn3ir7t" path="res://assets/sprites/enemys/bullets/pickaxe.tres" id="2_1udth"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4gkt"]
+atlas = ExtResource("2_1udth")
+region = Rect2(0, 0, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rlfrk"]
+atlas = ExtResource("2_1udth")
+region = Rect2(16, 0, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qsx6l"]
+atlas = ExtResource("2_1udth")
+region = Rect2(32, 0, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f00i2"]
+atlas = ExtResource("2_1udth")
+region = Rect2(48, 0, 16, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_arq0f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4gkt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rlfrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qsx6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f00i2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3hq36"]
+size = Vector2(11, 12)
+
+[node name="PickAxe" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_hhc3m")
+damage = 2
+speed = 85
+gravity = 6.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_arq0f")
+autoplay = "default"
+frame = 2
+frame_progress = 0.547617
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_3hq36")

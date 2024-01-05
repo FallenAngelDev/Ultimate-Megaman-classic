@@ -16,7 +16,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("ui_shoot"):
-		if megaman.current_state == megaman.DAMAGE:
+		if megaman.current_state == megaman.FROZEN:
 			return
 		if !can_shooot:
 			return

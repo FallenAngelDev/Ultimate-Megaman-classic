@@ -7,7 +7,7 @@ extends CharacterBody2D
 
 const SPEED = 100.0
 const JUMP_FORCE = 300
-enum {IDLE,RUN,JUMP,DAMAGE}
+enum {IDLE,RUN,JUMP,FROZEN}
 
 var current_state
 var animations : Array
@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 			_gravity(delta)
 			_movement()
 			move_and_slide()
-		DAMAGE:
+		FROZEN:
 			move_and_slide()
 	
 	#if Input.is_action_just_pressed("ui_shoot"):
@@ -100,9 +100,9 @@ func _can_jump():
 	#$ShootTimer.stop()
 
 func _damage(damage : int ,repulsion : bool):
-	if current_state == DAMAGE:
+	if current_state == FROZEN:
 		return
-	current_state = DAMAGE
+	current_state = FROZEN
 	$DamageSound.play()
 	velocity = Vector2.ZERO
 	if repulsion:
@@ -110,15 +110,22 @@ func _damage(damage : int ,repulsion : bool):
 	hp -= damage
 	hp_bar.value -= damage
 	anim.play("damage")
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.5).timeout
 	current_state = IDLE
 
 func _update_screen_limt(pos1,pos2):
 	var camera := $Camera2D as Camera2D
+	var current_speed := camera.position_smoothing_speed
+	current_state = FROZEN
+	velocity = 20 * velocity.normalized()
+	camera.position_smoothing_speed = 1.0
 	camera.limit_top = get_viewport_rect().size.y * pos1.y
 	camera.limit_left = get_viewport_rect().size.x * pos1.x
 	camera.limit_right = get_viewport_rect().size.x * (pos2.x + 1)
 	camera.limit_bottom = get_viewport_rect().size.y * (pos2.y + 1)
+	await get_tree().create_timer(1.5).timeout
+	current_state = IDLE
+	camera.position_smoothing_speed = current_speed
 
 func _on_hurt_box_body_entered(body: CharacterBody2D) -> void:
 	if body as Enemy:

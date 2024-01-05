@@ -5,32 +5,22 @@ extends CharacterBody2D
 @export var damage : int
 @onready var audio := preload("res://assets/audios/effetcs/enemyDamage.wav")
 @onready var explosion := preload("res://scenes/enemys/explosion.tscn")
+@onready var dink_audio := preload("res://assets/audios/effetcs/dink.wav")
 
+var closed := true
+var dink_stream := AudioStreamPlayer.new()
 var main_screen := Vector2.ZERO
 var current_megaman_screen := Vector2.ZERO
 var audio_stream = AudioStreamPlayer.new()
 var screen_notifier = VisibleOnScreenEnabler2D.new()
-#var active = false :
-	#set(value):
-		##visible = value
-		#set_process(value)
-		#set_physics_process(value)
-		#active = value
-
 
 func _ready() -> void:
-	#_update_main_screen()
-	#active = false
+	dink_stream.stream = dink_audio
 	audio_stream.stream = audio
+	add_child(dink_stream)
 	add_child(audio_stream)
 	add_child(screen_notifier)
 	screen_notifier.enable_node_path = self.get_path()
-	#screen_notifier.connect("screen_entered",_visible)
-	#screen_notifier.connect("screen_exited",_no_visible)
-
-func _physics_process(delta: float) -> void:
-	if screen_notifier.is_on_screen():
-		print("AAAAA")
 
 func receive_damage(_damage):
 	audio_stream.play()
@@ -41,12 +31,9 @@ func receive_damage(_damage):
 		instance.global_position = global_position
 		queue_free()
 
-#func _update_main_screen():
-	#main_screen = (global_position / get_viewport_rect().size).floor()
+func reflet_bullet(bullet : Bullet):
+	bullet.velocity = Vector2((-1 * bullet.velocity.x)/2 , -abs(bullet.velocity.x/2))
+	dink_stream.play() 
 
-#func _visible():
-	#active = true
-	#print("visivel")
-#
-#func _no_visible():
-	#active = false
+func gravity():
+	velocity.y += 5

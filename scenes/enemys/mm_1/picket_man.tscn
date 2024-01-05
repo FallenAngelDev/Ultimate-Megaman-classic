@@ -1,0 +1,90 @@
+[gd_scene load_steps=12 format=3 uid="uid://dksntjdam3ovd"]
+
+[ext_resource type="Texture2D" uid="uid://ofmk00sf36en" path="res://assets/sprites/enemys/enemys_atlas/picket_man.tres" id="1_43c43"]
+[ext_resource type="Script" path="res://scenes/enemys/mm_1/picket_man.gd" id="1_sax6q"]
+[ext_resource type="Shader" path="res://resources/shaders/hit_flash.gdshader" id="2_ilybh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qhl3k"]
+shader = ExtResource("2_ilybh")
+shader_parameter/active = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3ynb"]
+atlas = ExtResource("1_43c43")
+region = Rect2(0, 0, 32, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpbxl"]
+atlas = ExtResource("1_43c43")
+region = Rect2(32, 0, 32, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1hcd"]
+atlas = ExtResource("1_43c43")
+region = Rect2(64, 0, 32, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_78vyi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3ynb")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpbxl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1hcd")
+}],
+"loop": true,
+"name": &"throwing",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40x5v"]
+size = Vector2(26, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6d666"]
+size = Vector2(26, 24)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vf82"]
+radius = 110.005
+
+[node name="PicketMan" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_sax6q")
+hp = 40
+damage = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_qhl3k")
+sprite_frames = SubResource("SpriteFrames_78vyi")
+animation = &"idle"
+frame_progress = 0.535136
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 0)
+shape = SubResource("RectangleShape2D_40x5v")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-3, 0)
+shape = SubResource("RectangleShape2D_6d666")
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+shape = SubResource("CircleShape2D_1vf82")
+
+[node name="ThrowTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
+[connection signal="timeout" from="ThrowTimer" to="." method="_on_throw_timer_timeout"]
