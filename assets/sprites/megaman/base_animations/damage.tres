@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://cce37s0822vgr"]
+
+[ext_resource type="Texture2D" uid="uid://ba0hr20ynhkh" path="res://assets/sprites/megaman/base_megaman_sprite_sheet.png" id="1_48m5v"]
+
+[resource]
+atlas = ExtResource("1_48m5v")
+region = Rect2(248, 42, 26, 32)
