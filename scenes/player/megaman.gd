@@ -34,6 +34,8 @@ func _physics_process(delta: float) -> void:
 	match current_state:
 		IDLE:
 			_idle_state()
+			_gravity(delta)
+			move_and_slide()
 		RUN:
 			_run_state()
 			move_and_slide()
