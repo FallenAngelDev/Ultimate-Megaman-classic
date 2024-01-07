@@ -7,7 +7,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var main_screen = (get_parent().global_position / get_viewport_rect().size).floor()
 	if current_screen != main_screen:
 		_update_screen(main_screen)

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://darea8u7mvuep"]
+
+[ext_resource type="Texture2D" uid="uid://0n1s1hdtmhx1" path="res://assets/sprites/effects/explosion_ball.tres" id="1_bju0t"]
+[ext_resource type="AudioStream" uid="uid://8fl0khbtnxq" path="res://assets/audios/effetcs/megaman_defeat.wav" id="2_l3mwf"]
+
+[node name="ExplosionParticle" type="CPUParticles2D"]
+emitting = false
+amount = 14
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.9
+texture = ExtResource("1_bju0t")
+direction = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 150.0
+
+[node name="DefeatSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_l3mwf")
+autoplay = true

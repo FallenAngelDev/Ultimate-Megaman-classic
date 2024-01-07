@@ -11,5 +11,5 @@ func _ready() -> void:
 	await get_tree().create_timer(death_timer).timeout
 	queue_free()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()

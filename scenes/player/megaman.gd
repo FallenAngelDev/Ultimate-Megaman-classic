@@ -4,10 +4,10 @@ extends CharacterBody2D
 @onready var anim := $AnimationPlayer
 @onready var hp_bar := $CanvasLayer/HpBar
 @onready var weapon := $Buster
+@onready var defeat_explosion := preload("res://scenes/player/death_explosion_particle.tscn")
 
 const SPEED = 100.0
 const JUMP_FORCE = 300
-enum {IDLE,RUN,JUMP,FROZEN}
 
 var current_state
 var animations : Array
@@ -20,6 +20,8 @@ var max_jump_velocity : float
 var min_jump_velocity : float
 var jump_duration := 0.4
 var gravity
+
+enum {IDLE,RUN,JUMP,FROZEN}
 
 func _ready() -> void:
 	current_state = IDLE
@@ -109,6 +111,8 @@ func _damage(damage : int ,repulsion : bool):
 		velocity.x = -25 * transform.x.x
 	hp -= damage
 	hp_bar.value -= damage
+	if hp_bar.value == 0:
+		_death()
 	anim.play("damage")
 	await get_tree().create_timer(0.5).timeout
 	current_state = IDLE
@@ -139,14 +143,26 @@ func _on_hurt_box_body_entered(body: CharacterBody2D) -> void:
 		var item = body as Item
 		_charge_bar(item.amount)
 		item.queue_free()
+	#if body as TileMap:
+		#var tilemap = body as TileMap
+		#_death()
 
 func _death():
-	pass
+	velocity = Vector2.ZERO
+	$Sprite2D.visible = false
+	$HurtBox/CollisionShape2D.set_deferred("disabled",true)
+	var explosion = defeat_explosion.instantiate() as CPUParticles2D
+	get_parent().add_child(explosion)
+	explosion.global_position = global_position
+	explosion.emitting = true
+	await get_tree().create_timer(3).timeout
+	get_tree().reload_current_scene()
 
 func _charge_bar(amount):
 	if hp_bar.value == hp_bar.max_value:
 		return
 	current_state = FROZEN
+	anim.stop()
 	velocity = Vector2.ZERO
 	$ChargeBar.play()
 	for i in amount:

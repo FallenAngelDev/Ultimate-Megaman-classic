@@ -6,7 +6,7 @@ func _ready() -> void:
 	super._ready()
 	velocity.x = -SPEED
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func _on_area_2d_body_entered(body: Bullet) -> void:

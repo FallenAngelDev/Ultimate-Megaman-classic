@@ -8,7 +8,7 @@ var directions := [Vector2(2,0),Vector2(1,1),Vector2(1,-1)]
 
 var target : CharacterBody2D
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if !is_on_floor():
 		gravity()
 		move_and_slide()
@@ -25,9 +25,9 @@ func _on_area_2d_body_entered(body: Bullet) -> void:
 		$Timer.start()
 		return
 	if body.friend == true:
-		sprite.material.set("shader_param/active",true)
+		sprite.material.set_shader_parameter("active",true)
 		await get_tree().create_timer(0.1).timeout
-		sprite.material.set("shader_param/active",false)
+		sprite.material.set_shader_parameter("active",false)
 		receive_damage(body.damage)
 
 func _on_area_2d_2_body_entered(body: Megaman) -> void:
@@ -48,6 +48,6 @@ func _on_timer_timeout() -> void:
 	closed = true
 	sprite.frame = 0
 
-func _on_area_2d_2_body_exited(body: Megaman) -> void:
+func _on_area_2d_2_body_exited(_body: Megaman) -> void:
 	target = null
 	$Timer.stop()
