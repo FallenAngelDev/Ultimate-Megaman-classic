@@ -122,18 +122,16 @@ func _damage(damage : int ,repulsion : bool):
 func _update_screen_limt(pos1,pos2):
 	var camera := $Camera2D as Camera2D
 	var current_speed := camera.position_smoothing_speed
-	current_state = FROZEN
 	velocity = 20 * velocity.normalized()
-	camera.position_smoothing_speed = 1.0
+	camera.position_smoothing_speed = 2.0
 	camera.limit_top = get_viewport_rect().size.y * pos1.y
 	camera.limit_left = get_viewport_rect().size.x * pos1.x
 	camera.limit_right = get_viewport_rect().size.x * (pos2.x + 1)
 	camera.limit_bottom = get_viewport_rect().size.y * (pos2.y + 1)
-	await get_tree().create_timer(1.5).timeout
-	current_state = IDLE
+	await get_tree().create_timer(2).timeout
 	camera.position_smoothing_speed = current_speed
 
-func _on_hurt_box_body_entered(body: CharacterBody2D) -> void:
+func _on_hurt_box_body_entered(body: Node2D) -> void:
 	if body as Enemy:
 		var enemy = body as Enemy
 		_damage(enemy.damage, true)
@@ -145,9 +143,10 @@ func _on_hurt_box_body_entered(body: CharacterBody2D) -> void:
 		var item = body as Item
 		_charge_bar(item.amount)
 		item.queue_free()
-	#if body as TileMap:
-		#var tilemap = body as TileMap
-		#_death()
+	if body.is_in_group("Spikes"):
+		print("atingiu")
+	if body as TileMap:
+		_death()
 
 func _death():
 	velocity = Vector2.ZERO

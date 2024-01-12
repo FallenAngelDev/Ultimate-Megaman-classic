@@ -16,3 +16,7 @@ func _ready() -> void:
 
 func _on_body_entered(body: Megaman) -> void:
 	body._update_screen_limt(pos1,pos2)
+	body.current_state = body.FROZEN
+
+func _on_body_exited(body: Megaman) -> void:
+	body.current_state = body.IDLE

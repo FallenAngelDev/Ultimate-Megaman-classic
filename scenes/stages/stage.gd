@@ -1,7 +1,6 @@
 class_name Stage
 extends Node2D
 
-var enemys : Array[Enemy]
 var megaman : Megaman
 var current_screen := Vector2.ZERO
 

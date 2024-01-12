@@ -7,9 +7,8 @@ extends CharacterBody2D
 @export var death_timer : float = 3
 @export var gravity : float
 
-func _ready() -> void:
-	await get_tree().create_timer(death_timer).timeout
-	queue_free()
-
 func _physics_process(_delta: float) -> void:
 	move_and_slide()
+
+func _on_timer_timeout() -> void:
+	queue_free()

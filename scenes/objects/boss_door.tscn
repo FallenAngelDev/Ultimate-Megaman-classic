@@ -1,0 +1,128 @@
+[gd_scene load_steps=12 format=3 uid="uid://fp72vo1ice37"]
+
+[ext_resource type="Texture2D" uid="uid://o0gne5ubjokk" path="res://assets/sprites/tilesets/boss_door.png" id="1_5kuxw"]
+[ext_resource type="Script" path="res://scenes/objects/boss_door.gd" id="1_dfa4g"]
+[ext_resource type="AudioStream" uid="uid://bd2c10hjigoe3" path="res://assets/audios/effetcs/boss_gate.wav" id="3_sqyuv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rirle"]
+size = Vector2(32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80sq4"]
+atlas = ExtResource("1_5kuxw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_411es"]
+atlas = ExtResource("1_5kuxw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vkjb"]
+atlas = ExtResource("1_5kuxw")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_an6w0"]
+atlas = ExtResource("1_5kuxw")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lde7"]
+atlas = ExtResource("1_5kuxw")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2gjdc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80sq4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_411es")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vkjb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_an6w0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lde7")
+}],
+"loop": false,
+"name": &"open",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_83fuq"]
+size = Vector2(16, 64)
+
+[node name="BossDoor" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_dfa4g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 24)
+shape = SubResource("RectangleShape2D_rirle")
+
+[node name="SpritesOpen" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpritesOpen"]
+sprite_frames = SubResource("SpriteFrames_2gjdc")
+animation = &"open"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="SpritesOpen"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_2gjdc")
+animation = &"open"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="SpritesOpen"]
+position = Vector2(0, 32)
+sprite_frames = SubResource("SpriteFrames_2gjdc")
+animation = &"open"
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="SpritesOpen"]
+position = Vector2(0, 48)
+sprite_frames = SubResource("SpriteFrames_2gjdc")
+animation = &"open"
+
+[node name="SpritesClose" type="Node2D" parent="."]
+position = Vector2(16, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpritesClose"]
+sprite_frames = SubResource("SpriteFrames_2gjdc")
+animation = &"open"
+frame = 4
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="SpritesClose"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_2gjdc")
+animation = &"open"
+frame = 4
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="SpritesClose"]
+position = Vector2(0, 32)
+sprite_frames = SubResource("SpriteFrames_2gjdc")
+animation = &"open"
+frame = 4
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="SpritesClose"]
+position = Vector2(0, 48)
+sprite_frames = SubResource("SpriteFrames_2gjdc")
+animation = &"open"
+frame = 4
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_sqyuv")
+
+[node name="DoorBarrier" type="StaticBody2D" parent="."]
+position = Vector2(16, 0)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorBarrier"]
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_83fuq")
+disabled = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(148, 8)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

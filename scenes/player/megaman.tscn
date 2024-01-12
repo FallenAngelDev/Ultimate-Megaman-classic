@@ -19,7 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://dlnsdbbiiso8q" path="res://assets/audios/effetcs/bar_charge.wav" id="15_x1ec6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5fkd"]
-size = Vector2(21, 24)
+size = Vector2(17, 22)
 
 [sub_resource type="Animation" id="Animation_ln81g"]
 length = 0.001
@@ -450,7 +450,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d5kd2"]
-size = Vector2(21, 24)
+size = Vector2(21, 26)
 
 [node name="Megaman" type="CharacterBody2D"]
 collision_mask = 8
@@ -462,6 +462,7 @@ hframes = 2
 region_rect = Rect2(95, 51, 32, 30)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_y5fkd")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -470,7 +471,9 @@ libraries = {
 }
 
 [node name="Camera2D" parent="." instance=ExtResource("8_st037")]
-position_smoothing_speed = 10.0
+position = Vector2(1, -39)
+position_smoothing_speed = 20.0
+drag_horizontal_enabled = false
 drag_left_margin = 0.15
 drag_right_margin = 0.15
 
@@ -493,9 +496,10 @@ stream = ExtResource("15_x1ec6")
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 52
+collision_mask = 180
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_d5kd2")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
